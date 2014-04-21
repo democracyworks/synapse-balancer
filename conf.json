@@ -1,6 +1,6 @@
 {
     "services": {
-        "nixon": {
+        "immutant": {
             "discovery": {
                 "method": "docker",
                 "servers": [{
@@ -21,7 +21,7 @@
                     "mode http"
                 ]
             }
-            
+
         }
     },
     "haproxy": {
@@ -54,13 +54,15 @@
         ],
         "extra_sections": {
             "frontend http-in": [
+                "mode http",
                 "bind *:80",
+                "capture request header Host len 64",
                 "acl is_ballot_scout hdr_end(host) -i ballotscout.org",
                 "use_backend ballot_scout if is_ballot_scout"
             ],
             "backend ballot_scout": [
                 "mode http",
-                "reqrep ^([^\\ ])\\ (.) \\1\\ /ballot-scout\\2",
+                "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ /ballot-scout\\2",
                 "balance roundrobin",
                 "option httpclose",
                 "option forwardfor",
