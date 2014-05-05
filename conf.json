@@ -58,11 +58,21 @@
                 "bind *:80",
                 "capture request header Host len 64",
                 "acl is_ballot_scout hdr_end(host) -i ballotscout.org",
-                "use_backend ballot_scout if is_ballot_scout"
+                "use_backend ballot_scout if is_ballot_scout",
+                "acl is_address hdr_end(host) -i api-int.turbovote.org",
+                "use_backend address if is_address"
             ],
             "backend ballot_scout": [
                 "mode http",
                 "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ /ballot-scout\\2",
+                "balance roundrobin",
+                "option httpclose",
+                "option forwardfor",
+                "server local localhost:8081 maxconn 32"
+            ],
+            "backend address": [
+                "mode http",
+                "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ /nixon\\2",
                 "balance roundrobin",
                 "option httpclose",
                 "option forwardfor",
