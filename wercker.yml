@@ -4,7 +4,7 @@ build:
     - script:
         name: Build the container
         code: |
-          docker build -t quay.io/democracyworks/immutant-balancer .
+          docker build -t quay.io/democracyworks/immutant-balancer:$WERCKER_GIT_BRANCH .
     - script:
         name: Login to quay.io
         hide-from-log: true
@@ -46,7 +46,7 @@ deploy:
         name: restart containers
         code: |
           if [ -n "$DOCKER1_CONTAINER" ]; then ssh -i $PRIVATEKEY_PATH -o "StrictHostKeyChecking no" -p 2222 deploy@localhost "docker stop $DOCKER1_CONTAINER"; fi
-          ssh -i $PRIVATEKEY_PATH -o "StrictHostKeyChecking no" -p 2222 deploy@localhost "docker pull quay.io/democracyworks/immutant-balancer && docker run -d -p 60080:80 quay.io/democracyworks/immutant-balancer"
+          ssh -i $PRIVATEKEY_PATH -o "StrictHostKeyChecking no" -p 2222 deploy@localhost "docker pull quay.io/democracyworks/immutant-balancer && docker run -d -p 60080:80 quay.io/democracyworks/immutant-balancer:$WERCKER_GIT_BRANCH"
           sleep 15 # make sure new containers are spun up and serving traffic
           if [ -n "$DOCKER2_CONTAINER" ]; then ssh -i $PRIVATEKEY_PATH -o "StrictHostKeyChecking no" -p 2223 deploy@localhost "docker stop $DOCKER2_CONTAINER"; fi
-          ssh -i $PRIVATEKEY_PATH -o "StrictHostKeyChecking no" -p 2223 deploy@localhost "docker pull quay.io/democracyworks/immutant-balancer && docker run -d -p 60080:80 quay.io/democracyworks/immutant-balancer"
+          ssh -i $PRIVATEKEY_PATH -o "StrictHostKeyChecking no" -p 2223 deploy@localhost "docker pull quay.io/democracyworks/immutant-balancer && docker run -d -p 60080:80 quay.io/democracyworks/immutant-balancer:$WERCKER_GIT_BRANCH"
