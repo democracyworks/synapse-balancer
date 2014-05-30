@@ -60,7 +60,9 @@
                 "acl is_ballot_scout hdr_end(host) -i ballotscout.org",
                 "use_backend ballot_scout if is_ballot_scout",
                 "acl is_address hdr_end(host) -i api-int.turbovote.org",
-                "use_backend address if is_address"
+                "use_backend address if is_address",
+                "acl is_sendgrid_monitor hdr_end(host) -i sendgrid-monitor.democracy.works",
+                "use_backend sendgrid_monitor if is_sendgrid_monitor"
             ],
             "backend ballot_scout": [
                 "mode http",
@@ -73,6 +75,14 @@
             "backend address": [
                 "mode http",
                 "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ /nixon\\2",
+                "balance roundrobin",
+                "option httpclose",
+                "option forwardfor",
+                "server local localhost:8081 maxconn 32"
+            ],
+            "backend sendgrid_monitor": [
+                "mode http",
+                "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ /sendgrid-monitor\\2",
                 "balance roundrobin",
                 "option httpclose",
                 "option forwardfor",
