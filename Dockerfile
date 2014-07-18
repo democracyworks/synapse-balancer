@@ -1,5 +1,5 @@
-FROM democracyworks/base
-MAINTAINER Democracy Works, Inc. <dev@turbovote.org>
+FROM quay.io/democracyworks/base:latest
+MAINTAINER Democracy Works, Inc. <dev@democracy.works>
 
 RUN apt-get install -y haproxy ruby1.9.1 ruby1.9.1-dev patch make
 
