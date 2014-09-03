@@ -4,7 +4,7 @@ set -ex
 
 DOCKER_REPO=$(echo "$DOCKER_IMAGE" | cut -d: -f1)
 
-old_container_ids=$(docker ps | grep $DOCKER_IMAGE | awk '{print $1}')
+old_container_ids=$(docker ps | grep $DOCKER_REPO | awk '{print $1}')
 
 docker pull $DOCKER_REPO
 
