@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -ex
+
+DOCKER_REPO=$(echo "$DOCKER_IMAGE" | cut -d: -f1)
+
+old_container_ids=$(docker ps | grep $DOCKER_IMAGE | awk '{print $1}')
+
+docker pull $DOCKER_REPO
+
+for cid in "$old_container_ids"; do
+  docker stop $cid
+done
+
+docker run -d -p 60080:80 $DOCKER_IMAGE
