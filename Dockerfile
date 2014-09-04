@@ -1,9 +1,12 @@
 FROM quay.io/democracyworks/base:latest
 MAINTAINER Democracy Works, Inc. <dev@democracy.works>
 
-RUN apt-get update && apt-get install -y haproxy ruby1.9.1 ruby1.9.1-dev patch make && apt-get clean
+RUN apt-get update && apt-get install -y haproxy ruby1.9.1 ruby1.9.1-dev patch make git
 
-RUN gem install synapse
+RUN gem install bundler
+ADD Gemfile /Gemfile
+ADD Gemfile.lock /Gemfile.lock
+RUN bundle install --system
 
 RUN echo ENABLED=1 > /etc/default/haproxy
 
