@@ -8,8 +8,10 @@ old_container_ids=$(docker ps | grep $DOCKER_REPO | awk '{print $1}')
 
 docker pull $DOCKER_REPO
 
-for cid in "$old_container_ids"; do
-  docker stop $cid
-done
+if [[ -n "$old_container_ids" ]]; then
+  for cid in "$old_container_ids"; do
+    docker stop $cid
+  done
+fi
 
 docker run -d -p 60080:80 $DOCKER_IMAGE
