@@ -1,5 +1,7 @@
 # Synapse Balancer
 
+![Build status](https://badge.buildbox.io/401808b0dc726863b8bbb10210c148e5e691d7ae5e7716dadf.svg)
+
 > Uses synapse to expose Docker web apps to ELBs
 
 ## Purpose
