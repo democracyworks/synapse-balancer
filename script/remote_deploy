@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# This script is copied to the deploy target by the deploy script and run there.
+# You probably don't want to run it directly.
+
 set -ex
 
 DOCKER_REPO=$(echo "$DOCKER_IMAGE" | cut -d: -f1)
