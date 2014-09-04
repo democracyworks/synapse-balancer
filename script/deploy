@@ -15,8 +15,8 @@ function usage() {
 }
 
 echo '--- retrieving repo and tag'
-if [[ -z $DOCKER_IMAGE ]]; then
-  if [[ ! -z $1 ]]; then
+if [[ -z "$DOCKER_IMAGE" ]]; then
+  if [[ -n "$1" ]]; then
     DOCKER_IMAGE=$1
   elif hash buildbox-artifact 2>/dev/null; then
     buildbox-artifact download docker_image .
@@ -24,7 +24,7 @@ if [[ -z $DOCKER_IMAGE ]]; then
   fi
 fi
 
-if [[ -z $DOCKER_IMAGE ]]; then
+if [[ -z "$DOCKER_IMAGE" ]]; then
   usage
   exit 1
 fi
