@@ -97,7 +97,7 @@
       ],
       "backend address": [
         "mode http",
-        "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ /nixon\\2",
+        "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ /address-works\\2",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
