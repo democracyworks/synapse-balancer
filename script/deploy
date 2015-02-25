@@ -18,7 +18,7 @@ echo '--- retrieving repo and tag'
 if [[ -z "$DOCKER_IMAGE" ]]; then
   if [[ -n "$1" ]]; then
     DOCKER_IMAGE=$1
-  elif hash buildbox-agen 2>/dev/null; then
+  elif hash buildbox-agent 2>/dev/null; then
     DOCKER_IMAGE=$(buildbox-agent build-data get docker-image)
   fi
 fi
