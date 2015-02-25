@@ -5,10 +5,12 @@
         "method": "docker",
         "servers": [{
           "name": "docker1",
-          "host": "docker1-int.turbovote.org"
+          "host": "docker1-int.turbovote.org",
+          "port": 2376
         }, {
           "name": "docker2",
-          "host": "docker2-int.turbovote.org"
+          "host": "docker2-int.turbovote.org",
+          "port": 2376
         }],
         "image_name": "quay.io/democracyworks/immutant",
         "container_port": 8080,
@@ -27,10 +29,12 @@
         "method": "docker",
         "servers": [{
           "name": "docker1",
-          "host": "docker1-int.turbovote.org"
+          "host": "docker1-int.turbovote.org",
+          "port": 2376
         }, {
           "name": "docker2",
-          "host": "docker2-int.turbovote.org"
+          "host": "docker2-int.turbovote.org",
+          "port": 2376
         }],
         "image_name": "quay.io/democracyworks/turbovote",
         "container_port": 3000,
