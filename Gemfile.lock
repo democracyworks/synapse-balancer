@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/turbovote/synapse.git
+  remote: git://github.com/democracyworks/synapse.git
   revision: 946eb22493d49df99efe817a9affc98862c0c949
   branch: v0.11.1-turbovote
   specs:
@@ -15,17 +15,17 @@ GEM
       archive-tar-minitar
       excon (>= 0.28)
       json
-    excon (0.39.5)
-    json (1.8.1)
+    excon (0.44.3)
+    json (1.8.2)
     little-plugger (1.1.3)
     logging (1.8.2)
       little-plugger (>= 1.1.3)
       multi_json (>= 1.8.4)
     multi_json (1.10.1)
-    zk (1.9.4)
+    zk (1.9.5)
       logging (~> 1.8.2)
       zookeeper (~> 1.4.0)
-    zookeeper (1.4.9)
+    zookeeper (1.4.10)
 
 PLATFORMS
   ruby
