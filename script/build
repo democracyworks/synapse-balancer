@@ -18,4 +18,8 @@ if [[ $CI = "true" && $BUILDBOX_PULL_REQUEST = "false" ]]; then
   docker push $DOCKER_REPO
 fi
 
-echo "$DOCKER_REPO:$IMAGE_TAG" > docker_image
+if hash buildbox-agent 2>/dev/null ; then
+  buildbox-agent build-data set docker-image "$DOCKER_REPO:$IMAGE_TAG"
+else
+  echo "$DOCKER_REPO:$IMAGE_TAG" > docker_image
+fi
