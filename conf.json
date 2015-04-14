@@ -4,13 +4,17 @@
       "discovery": {
         "method": "docker",
         "servers": [{
-          "name": "docker1",
-          "host": "docker1-int.turbovote.org",
-          "port": 2376
+          "name": "coreos-1",
+          "host": "10.36.116.78",
+          "port": 2375
         }, {
-          "name": "docker2",
-          "host": "docker2-int.turbovote.org",
-          "port": 2376
+          "name": "coreos-2",
+          "host": "10.36.126.31",
+          "port": 2375
+        }, {
+          "name": "coreos-3",
+          "host": "10.36.136.99",
+          "port": 2375
         }],
         "image_name": "quay.io/democracyworks/immutant",
         "container_port": 8080,
@@ -28,13 +32,17 @@
       "discovery": {
         "method": "docker",
         "servers": [{
-          "name": "docker1",
-          "host": "docker1-int.turbovote.org",
-          "port": 2376
+          "name": "coreos-1",
+          "host": "10.36.116.78",
+          "port": 2375
         }, {
-          "name": "docker2",
-          "host": "docker2-int.turbovote.org",
-          "port": 2376
+          "name": "coreos-2",
+          "host": "10.36.126.31",
+          "port": 2375
+        }, {
+          "name": "coreos-3",
+          "host": "10.36.136.99",
+          "port": 2375
         }],
         "image_name": "quay.io/democracyworks/turbovote",
         "container_port": 3000,
