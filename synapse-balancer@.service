@@ -3,6 +3,8 @@ Description=Synapse Balancer
 
 After=docker.service
 Requires=docker.service
+After=consul@%i.service
+Wants=consul@%i.service
 
 [Service]
 EnvironmentFile=/etc/environment
@@ -15,6 +17,7 @@ Environment=CONTAINER=synapse-balancer
 
 ExecStartPre=-/usr/bin/docker kill ${CONTAINER}
 ExecStartPre=-/usr/bin/docker rm ${CONTAINER}
+ExecStartPre=/usr/bin/curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/buildkite/dockercfg?raw -o /root/.dockercfg
 ExecStartPre=/usr/bin/docker pull ${DOCKER_REPO}:${VERSION}
 
 ExecStart=/bin/bash -c 'docker run --name ${CONTAINER} --publish 60080:80 ${DOCKER_REPO}:${VERSION}'
@@ -22,4 +25,4 @@ ExecStart=/bin/bash -c 'docker run --name ${CONTAINER} --publish 60080:80 ${DOCK
 ExecStop=/usr/bin/docker stop ${CONTAINER}
 
 [X-Fleet]
-Conflicts=synapse-balancer@*.service
+MachineOf=consul@%i.service
