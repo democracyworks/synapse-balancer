@@ -1,6 +1,6 @@
 {
   "services": {
-    "immutant": {
+    "wildfly": {
       "discovery": {
         "method": "docker",
         "servers": [{
@@ -16,7 +16,7 @@
           "host": "10.36.136.99",
           "port": 2375
         }],
-        "image_name": "quay.io/democracyworks/immutant",
+        "image_name": "quay.io/democracyworks/wildfly",
         "container_port": 8080,
         "check_interval": 5
       },
