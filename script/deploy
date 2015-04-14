@@ -2,6 +2,11 @@
 
 set -ex
 
+if [[ "${BUILDKITE_PULL_REQUEST}" != "false" ]]; then
+  echo "Not deploying because this is a pull request"
+  exit 0
+fi
+
 if [[ -z $DOCKER_IMAGE ]]; then
   if [[ -n $1 ]]; then
     DOCKER_IMAGE=$1
