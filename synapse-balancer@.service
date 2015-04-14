@@ -9,7 +9,7 @@ EnvironmentFile=/etc/environment
 TimeoutStartSec=10m # startup can take awhile when pulling docker images
 TimeoutStopSec=10m
 
-Environment=DOCKER_REPO=quay.io/democracyworks/synapse-balancer-coreos
+Environment=DOCKER_REPO=quay.io/democracyworks/synapse-balancer
 Environment=VERSION=v0.11.1-turbovote
 Environment=CONTAINER=synapse-balancer
 
