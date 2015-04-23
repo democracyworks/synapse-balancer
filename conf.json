@@ -97,7 +97,9 @@
         "acl is_sendgrid_monitor hdr_end(host) -i sendgrid-monitor.democracy.works",
         "use_backend sendgrid_monitor if is_sendgrid_monitor",
         "acl is_turbovote_staging hdr_end(host) -i turbovote.net",
-        "use_backend turbovote_staging if is_turbovote_staging"
+        "use_backend turbovote_staging if is_turbovote_staging",
+        "acl is_online_voter_reg_api hdr_end(host) -i online-voter-reg-api.turbovote.org",
+        "use_backend online_voter_reg_api if is_online_voter_reg_api"
       ],
       "backend ballot_scout": [
         "mode http",
@@ -129,6 +131,14 @@
         "option httpclose",
         "option forwardfor",
         "server local localhost:8082 maxconn 32"
+      ],
+      "backend online_voter_reg_api": [
+        "mode http",
+        "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ /online-voter-reg-api\\2",
+        "balance roundrobin",
+        "option httpclose",
+        "option forwardfor",
+        "server local localhost:8081 maxconn 32"
       ]
     }
   }
