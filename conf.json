@@ -99,7 +99,10 @@
         "acl is_turbovote_staging hdr_end(host) -i turbovote.net",
         "use_backend turbovote_staging if is_turbovote_staging",
         "acl is_online_voter_reg_api hdr_end(host) -i online-voter-reg-api.turbovote.org",
-        "use_backend online_voter_reg_api if is_online_voter_reg_api"
+        "use_backend online_voter_reg_api if is_online_voter_reg_api",
+        "acl is_api_server hdr(host) -i api.turbovote.org",
+        "acl is_user_api url_beg -i /users",
+        "use_backend user_http_api if is_api_server is_user_api"
       ],
       "backend ballot_scout": [
         "mode http",
@@ -112,6 +115,14 @@
       "backend address": [
         "mode http",
         "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ /address-works\\2",
+        "balance roundrobin",
+        "option httpclose",
+        "option forwardfor",
+        "server local localhost:8081 maxconn 32"
+      ],
+      "backend user_http_api": [
+        "mode http",
+        "reqrep ^([^\\ ]*)\\ /users(.+)    \\1\\ /user-http-api\\2",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
