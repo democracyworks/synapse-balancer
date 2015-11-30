@@ -1,7 +1,10 @@
-FROM quay.io/democracyworks/base:latest
+FROM ubuntu:15.10
 MAINTAINER Democracy Works, Inc. <dev@democracy.works>
 
-RUN apt-get update && apt-get install -y haproxy ruby1.9.1 ruby1.9.1-dev patch make git
+RUN apt-get update && apt-get upgrade -y
+
+RUN apt-get update && apt-get install -y haproxy ruby ruby-dev gcc \
+    patch make git zlib1g-dev
 
 RUN gem install bundler
 ADD Gemfile /Gemfile
