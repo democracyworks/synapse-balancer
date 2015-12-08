@@ -102,11 +102,11 @@
         "use_backend online_voter_reg_api if is_online_voter_reg_api",
         "acl is_api_server hdr(host) -i api.turbovote.org",
         "acl is_user_api url_beg -i /users",
-        "use_backend user_http_api if is_api_server is_user_api",
+        "use_backend user_api if is_api_server is_user_api",
         "acl is_election_notification_api url_beg -i /election-notifications",
-        "use_backend election_notification_http_api if is_api_server is_election_notification_api",
-        "acl is_voter_registration_http_api url_beg -i /voter-registration",
-        "use_backend voter_registration_http_api if is_api_server is_voter_registration_http_api"
+        "use_backend election_notification_api if is_api_server is_election_notification_api",
+        "acl is_voter_registration_api url_beg -i /voter-registration",
+        "use_backend voter_registration_api if is_api_server is_voter_registration_api",
       ],
       "backend ballot_scout": [
         "mode http",
@@ -124,7 +124,7 @@
         "option forwardfor",
         "server local localhost:8081 maxconn 32"
       ],
-      "backend user_http_api": [
+      "backend user_api": [
         "mode http",
         "reqrep ^([^\\ ]*)\\ /users(.+)    \\1\\ /user-http-api\\2",
         "balance roundrobin",
@@ -132,7 +132,7 @@
         "option forwardfor",
         "server local localhost:8081 maxconn 32"
       ],
-      "backend election_notification_http_api": [
+      "backend election_notification_api": [
         "mode http",
         "reqrep ^([^\\ ]*)\\ /election-notifications(.+)    \\1\\ /election-notification-http-api\\2",
         "balance roundrobin",
@@ -140,7 +140,7 @@
         "option forwardfor",
         "server local localhost:8081 maxconn 32"
       ],
-      "backend voter_registration_http_api": [
+      "backend voter_registration_api": [
         "mode http",
         "reqrep ^([^\\ ]*)\\ /voter-registration(.+)    \\1\\ /voter-registration-http-api\\2",
         "balance roundrobin",
