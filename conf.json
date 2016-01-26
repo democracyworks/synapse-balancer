@@ -164,7 +164,7 @@
       ],
       "backend voting_method_api": [
         "mode http",
-        "reqrep ^([^\\ ]*)\\ /voting-methods(.+)  \\1\\ /voting-methods-http-api\\2",
+        "reqrep ^([^\\ ]*)\\ /voting-methods(.+)  \\1\\ /voting-method-http-api\\2",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
