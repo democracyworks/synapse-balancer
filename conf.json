@@ -108,7 +108,11 @@
         "acl is_voter_registration_api url_beg -i /voter-registration",
         "use_backend voter_registration_api if is_api_server is_voter_registration_api",
         "acl is_election_authority_api url_beg -i /election-authorities",
-        "use_backend election_authority_api if is_api_server is_election_authority_api"
+        "use_backend election_authority_api if is_api_server is_election_authority_api",
+        "acl is_voting_method_api url_beg -i /voting-methods",
+        "use_backend voting_method_api if is_api_server is_voting_method_api",
+        "acl is_vote_by_mail_api url_beg -i /vote-by-mail",
+        "use_backend vote_by_mail_api if is_api_server is_vote_by_mail_api"
       ],
       "backend ballot_scout": [
         "mode http",
@@ -153,6 +157,22 @@
       "backend election_authority_api": [
         "mode http",
         "reqrep ^([^\\ ]*)\\ /election-authorities(.+)  \\1\\ /election-authority-http-api\\2",
+        "balance roundrobin",
+        "option httpclose",
+        "option forwardfor",
+        "server local localhost:8081 maxconn 32"
+      ],
+      "backend voting_method_api": [
+        "mode http",
+        "reqrep ^([^\\ ]*)\\ /voting-methods(.+)  \\1\\ /voting-methods-http-api\\2",
+        "balance roundrobin",
+        "option httpclose",
+        "option forwardfor",
+        "server local localhost:8081 maxconn 32"
+      ],
+      "backend vote_by_mail_api": [
+        "mode http",
+        "reqrep ^([^\\ ]*)\\ /vote-by-mail(.+)  \\1\\ /vote-by-mail-http-api\\2",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
