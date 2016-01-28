@@ -112,7 +112,9 @@
         "acl is_voting_method_api url_beg -i /voting-methods",
         "use_backend voting_method_api if is_api_server is_voting_method_api",
         "acl is_vote_by_mail_api url_beg -i /vote-by-mail",
-        "use_backend vote_by_mail_api if is_api_server is_vote_by_mail_api"
+        "use_backend vote_by_mail_api if is_api_server is_vote_by_mail_api",
+        "acl is_election_api url_beg -i /elections",
+        "use_backend election_api if is_api_server is_election_api"
       ],
       "backend ballot_scout": [
         "mode http",
@@ -196,6 +198,14 @@
       "backend online_voter_reg_api": [
         "mode http",
         "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ /online-voter-reg-api\\2",
+        "balance roundrobin",
+        "option httpclose",
+        "option forwardfor",
+        "server local localhost:8081 maxconn 32"
+      ],
+      "backend election_api": [
+        "mode http",
+        "reqrep ^([^\\ ]*)\\ /elections(.+)    \\1\\ /election-http-api\\2",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
