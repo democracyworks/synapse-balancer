@@ -113,6 +113,8 @@
         "use_backend voting_method_api if is_api_server is_voting_method_api",
         "acl is_vote_by_mail_api url_beg -i /vote-by-mail",
         "use_backend vote_by_mail_api if is_api_server is_vote_by_mail_api",
+        "acl is_partners_api url_beg -i /partners",
+        "use_backend partners_api if is_api_server is_partners_api",
         "acl is_election_api url_beg -i /elections",
         "use_backend election_api if is_api_server is_election_api"
       ],
@@ -175,6 +177,14 @@
       "backend vote_by_mail_api": [
         "mode http",
         "reqrep ^([^\\ ]*)\\ /vote-by-mail(.+)  \\1\\ /vote-by-mail-http-api\\2",
+        "balance roundrobin",
+        "option httpclose",
+        "option forwardfor",
+        "server local localhost:8081 maxconn 32"
+      ],
+      "backend partners_api": [
+        "mode http",
+        "reqrep ^([^\\ ]*)\\ /partners(.+)  \\1\\ /partner-http-api\\2",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
