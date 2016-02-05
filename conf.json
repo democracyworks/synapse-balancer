@@ -86,6 +86,16 @@
       "balance  roundrobin"
     ],
     "extra_sections": {
+      "listen stats": [
+        "mode http",
+        "bind *:8080",
+        "log global",
+        "maxconn 10",
+        "stats enable",
+        "stats refresh 30s",
+        "stats show-node",
+        "stats uri /stats"
+      ],
       "frontend http-in": [
         "mode http",
         "bind *:80",
