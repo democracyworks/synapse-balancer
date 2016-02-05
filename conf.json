@@ -33,15 +33,15 @@
         "method": "docker",
         "servers": [{
           "name": "coreos-1",
-          "host": "10.36.116.244",
+          "host": "10.36.116.77",
           "port": 2375
         }, {
           "name": "coreos-2",
-          "host": "10.36.126.170",
+          "host": "10.36.126.64",
           "port": 2375
         }, {
           "name": "coreos-3",
-          "host": "10.36.136.151",
+          "host": "10.36.136.44",
           "port": 2375
         }],
         "image_name": "quay.io/democracyworks/turbovote",
