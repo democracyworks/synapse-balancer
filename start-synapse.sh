@@ -1,2 +1,2 @@
-#!/bin/bash
-bundle exec synapse --conf=/conf.json
+#!/bin/sh
+exec bundle exec synapse --conf=conf.json
