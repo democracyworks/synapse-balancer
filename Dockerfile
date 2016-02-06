@@ -1,8 +1,6 @@
 FROM alpine:3.3
 MAINTAINER Democracy Works, Inc. <dev@democracy.works>
 
-RUN ulimit -n 10000
-
 RUN apk update && apk upgrade
 RUN apk add --update haproxy ruby ruby-dev ruby-io-console build-base \
     libxml2-dev libxslt-dev zlib-dev patch make git && rm -rf /var/cache/apk/*
