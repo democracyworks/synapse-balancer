@@ -58,7 +58,7 @@
     }
   },
   "haproxy": {
-    "reload_command": "service haproxy reload",
+    "reload_command": "haproxy -f /etc/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)",
     "config_file_path": "/etc/haproxy/haproxy.cfg",
     "socket_file_path": "/var/haproxy/stats.sock",
     "do_writes": true,
@@ -86,6 +86,16 @@
       "balance  roundrobin"
     ],
     "extra_sections": {
+      "listen stats": [
+        "mode http",
+        "bind *:8080",
+        "log global",
+        "maxconn 10",
+        "stats enable",
+        "stats refresh 30s",
+        "stats show-node",
+        "stats uri /stats"
+      ],
       "frontend http-in": [
         "mode http",
         "bind *:80",
