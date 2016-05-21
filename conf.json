@@ -127,9 +127,7 @@
         "acl is_partners_api url_beg -i /partners",
         "use_backend partners_api if is_api_server is_partners_api",
         "acl is_election_api url_beg -i /elections",
-        "use_backend election_api if is_api_server is_election_api",
-        "acl is_turbovote_origin hdr_end(host) -i origin.turbovote.org",
-        "use_backend turbovote_origin if is_turbovote_origin"
+        "use_backend election_api if is_api_server is_election_api"
       ],
       "backend ballot_scout": [
         "mode http",
@@ -233,13 +231,6 @@
         "option httpclose",
         "option forwardfor",
         "server local localhost:8081 maxconn 32"
-      ],
-      "backend turbovote_origin": [
-        "mode http",
-        "balance roundrobin",
-        "option httpclose",
-        "option forwardfor",
-        "server local localhost:8083 maxconn 32"
       ]
     }
   }
