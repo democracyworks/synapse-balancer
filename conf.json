@@ -5,15 +5,15 @@
         "method": "docker",
         "servers": [{
           "name": "coreos-1",
-          "host": "10.36.116.213",
+          "host": "10.36.116.233",
           "port": 2375
         }, {
           "name": "coreos-2",
-          "host": "10.36.126.216",
+          "host": "10.36.126.92",
           "port": 2375
         }, {
           "name": "coreos-3",
-          "host": "10.36.136.122",
+          "host": "10.36.136.148",
           "port": 2375
         }],
         "image_name": "quay.io/democracyworks/wildfly",
