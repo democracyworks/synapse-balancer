@@ -128,8 +128,6 @@
         "use_backend partners_api if is_api_server is_partners_api",
         "acl is_election_api url_beg -i /elections",
         "use_backend election_api if is_api_server is_election_api"
-        "acl is_election_mail_api url_beg -i /election-mail",
-        "use_backend election_mail_api if is_api_server is_election_mail_api"
       ],
       "backend ballot_scout": [
         "mode http",
@@ -229,14 +227,6 @@
       "backend election_api": [
         "mode http",
         "reqrep ^([^\\ ]*)\\ /elections(.+)    \\1\\ /election-http-api\\2",
-        "balance roundrobin",
-        "option httpclose",
-        "option forwardfor",
-        "server local localhost:8081 maxconn 32"
-      ]
-      "backend election_mail_api": [
-        "mode http",
-        "reqrep ^([^\\ ]*)\\ /election-mail(.+)    \\1\\ /election-mail-http-api\\2",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
