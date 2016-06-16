@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -e
 
 if [[ -z $DOCKER_REPO && -n $1 ]]; then
   DOCKER_REPO=$1
