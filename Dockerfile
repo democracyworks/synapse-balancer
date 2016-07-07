@@ -18,9 +18,13 @@ ADD Gemfile.lock Gemfile.lock
 RUN bundle install --system
 
 ADD start-synapse.sh start-synapse.sh
-ADD conf.json conf.json
+ADD conf1.json conf1.json
+ADD conf2.json conf2.json
+ADD conf3.json conf3.json
 
 EXPOSE 80
 EXPOSE 8080
+EXPOSE 8081
+EXPOSE 8082
 
 CMD ["/usr/src/synapse-balancer/start-synapse.sh"]

@@ -4,14 +4,6 @@
       "discovery": {
         "method": "docker",
         "servers": [{
-          "name": "coreos-1",
-          "host": "10.36.116.233",
-          "port": 2375
-        }, {
-          "name": "coreos-2",
-          "host": "10.36.126.92",
-          "port": 2375
-        }, {
           "name": "coreos-3",
           "host": "10.36.136.148",
           "port": 2375
@@ -32,14 +24,6 @@
       "discovery": {
         "method": "docker",
         "servers": [{
-          "name": "coreos-1",
-          "host": "10.36.116.99",
-          "port": 2375
-        }, {
-          "name": "coreos-2",
-          "host": "10.36.126.150",
-          "port": 2375
-        }, {
           "name": "coreos-3",
           "host": "10.36.136.118",
           "port": 2375
