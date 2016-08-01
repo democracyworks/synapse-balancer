@@ -228,14 +228,14 @@
         "option forwardfor",
         "server local localhost:8081 maxconn 32"
       ],
-     "backend turbovote_admin_api": [
+      "backend turbovote_admin_api": [
         "mode http",
         "reqrep ^([^\\ ]*)\\ /turbovote-admin(.+)    \\1\\ /turbovote-admin-http-api\\2",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
         "server local localhost:8081 maxconn 32"
-       ]
+      ]
     }
   }
 }
