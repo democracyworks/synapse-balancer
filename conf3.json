@@ -113,7 +113,9 @@
         "acl is_election_api url_beg -i /elections",
         "use_backend election_api if is_api_server is_election_api",
         "acl is_election_mail_api url_beg -i /election-mail",
-        "use_backend election_mail_api if is_api_server is_election_mail_api"
+        "use_backend election_mail_api if is_api_server is_election_mail_api",
+        "acl is_turbovote_admin_api url_beg -i /turbovote-admin",
+        "use_backend turbovote_admin_api if is_api_server is_turbovote_admin_api"
       ],
       "backend ballot_scout": [
         "mode http",
@@ -225,7 +227,23 @@
         "option httpclose",
         "option forwardfor",
         "server local localhost:8081 maxconn 32"
-      ]
+      ],
+      "backend turbovote_admin_api": [
+        "mode http",
+        "reqrep ^([^\\ ]*)\\ /turbovote-admin(.+)    \\1\\ /turbovote-admin-http-api\\2",
+        "balance roundrobin",
+        "option httpclose",
+        "option forwardfor",
+        "server local localhost:8081 maxconn 32"
+      ],
+      "backend turbovote_admin_api": [
+        "mode http",
+        "reqrep ^([^\\ ]*)\\ /turbovote-admin(.+)    \\1\\ /turbovote-admin-http-api\\2",
+        "balance roundrobin",
+        "option httpclose",
+        "option forwardfor",
+        "server local localhost:8081 maxconn 32"
+       ]
     }
   }
 }
