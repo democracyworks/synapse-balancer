@@ -1,4 +1,4 @@
-FROM alpine:3.3
+FROM alpine:3.4
 MAINTAINER Democracy Works, Inc. <dev@democracy.works>
 
 RUN apk update && apk upgrade
