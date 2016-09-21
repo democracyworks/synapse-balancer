@@ -1,22 +1,22 @@
 #!/bin/bash
 
-set -ex
+set -e
+
+if [[ -n $1 ]]; then
+  DEPLOY_ENV=$1
+fi
 
 if [[ "${BUILDKITE_PULL_REQUEST}" != "false" ]]; then
   echo "Not deploying because this is a pull request"
   exit 0
 fi
 
-if [[ -z $DOCKER_IMAGE ]]; then
-  if [[ -n $1 ]]; then
-    DOCKER_IMAGE=$1
-  elif hash buildkite-agent 2>/dev/null; then
-    DOCKER_IMAGE=$(buildkite-agent meta-data get docker-image)
-  fi
+if hash buildkite-agent 2>/dev/null; then
+  DOCKER_IMAGE=$(buildkite-agent meta-data get docker-image)
 fi
 
 if [[ -z $DOCKER_IMAGE ]]; then
-  echo "Docker image argument is required (repo/of/image:version); or set the DOCKER_IMAGE env var."
+  echo "DOCKER_IMAGE is required (repo/of/image:version)"
   exit 1
 fi
 
