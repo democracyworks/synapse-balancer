@@ -5,7 +5,7 @@
         "method": "docker",
         "servers": [{
           "name": "coreos-2",
-          "host": "10.36.126.92",
+          "host": "10.36.136.139",
           "port": 2375
         }],
         "image_name": "quay.io/democracyworks/wildfly",
@@ -14,26 +14,6 @@
       },
       "haproxy": {
         "port": 8081,
-        "server_options": "check inter 2s rise 3 fall 2",
-        "listen": [
-          "mode http"
-        ]
-      }
-    },
-    "turbovote": {
-      "discovery": {
-        "method": "docker",
-        "servers": [{
-          "name": "coreos-2",
-          "host": "10.36.126.150",
-          "port": 2375
-        }],
-        "image_name": "quay.io/democracyworks/turbovote",
-        "container_port": 3000,
-        "check_interval": 5
-      },
-      "haproxy": {
-        "port": 8082,
         "server_options": "check inter 2s rise 3 fall 2",
         "listen": [
           "mode http"
@@ -91,8 +71,6 @@
         "use_backend address if is_address",
         "acl is_sendgrid_monitor hdr_end(host) -i sendgrid-monitor.democracy.works",
         "use_backend sendgrid_monitor if is_sendgrid_monitor",
-        "acl is_turbovote_staging hdr_end(host) -i turbovote.net",
-        "use_backend turbovote_staging if is_turbovote_staging",
         "acl is_online_voter_reg_api hdr_end(host) -i online-voter-reg-api.turbovote.org",
         "use_backend online_voter_reg_api if is_online_voter_reg_api",
         "acl is_api_server hdr_end(host) -i api.turbovote.org",
@@ -196,13 +174,6 @@
         "option httpclose",
         "option forwardfor",
         "server local localhost:8081 maxconn 32"
-      ],
-      "backend turbovote_staging": [
-        "mode http",
-        "balance roundrobin",
-        "option httpclose",
-        "option forwardfor",
-        "server local localhost:8082 maxconn 32"
       ],
       "backend online_voter_reg_api": [
         "mode http",
