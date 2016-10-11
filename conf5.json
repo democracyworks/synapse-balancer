@@ -202,6 +202,7 @@
       "backend turbovote_admin_api": [
         "mode http",
         "reqrep ^([^\\ ]*)\\ /turbovote-admin(.+)    \\1\\ /turbovote-admin-http-api\\2",
+        "timeout  server  10m",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
