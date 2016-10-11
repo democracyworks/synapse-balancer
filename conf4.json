@@ -5,7 +5,7 @@
         "method": "docker",
         "servers": [{
           "name": "coreos-4",
-          "host": "10.36.136.87",
+          "host": "10.36.116.34",
           "port": 2375
         }],
         "image_name": "quay.io/democracyworks/wildfly",
