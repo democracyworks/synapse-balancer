@@ -98,6 +98,7 @@
       "backend ballot_scout": [
         "mode http",
         "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ /ballot-scout\\2",
+        "timeout server 10m",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
