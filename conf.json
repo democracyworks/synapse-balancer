@@ -45,7 +45,7 @@
       "retries  3",
       "timeout  connect 5s",
       "timeout  client  1m",
-      "timeout  server  1m",
+      "timeout  server  10m",
       "option   redispatch",
       "balance  roundrobin"
     ],
@@ -98,6 +98,7 @@
       "backend ballot_scout": [
         "mode http",
         "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ /ballot-scout\\2",
+        "timeout server 10m",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
@@ -202,6 +203,7 @@
       "backend turbovote_admin_api": [
         "mode http",
         "reqrep ^([^\\ ]*)\\ /turbovote-admin(.+)    \\1\\ /turbovote-admin-http-api\\2",
+        "timeout  server  10m",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
