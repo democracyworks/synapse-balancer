@@ -18,11 +18,7 @@ ADD Gemfile.lock Gemfile.lock
 RUN bundle install --system
 
 ADD start-synapse.sh start-synapse.sh
-ADD conf1.json conf1.json
-ADD conf2.json conf2.json
-ADD conf3.json conf3.json
-ADD conf4.json conf4.json
-ADD conf5.json conf5.json
+ADD conf.json conf.json
 
 EXPOSE 80
 EXPOSE 8080

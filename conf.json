@@ -4,8 +4,8 @@
       "discovery": {
         "method": "docker",
         "servers": [{
-          "name": "coreos-2",
-          "host": "10.36.136.139",
+          "name": "coreos-1",
+          "host": "172.17.0.1",
           "port": 2375
         }],
         "image_name": "quay.io/democracyworks/wildfly",
