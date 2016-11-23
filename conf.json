@@ -59,6 +59,46 @@
           "mode http"
         ]
       }
+    },
+    "election-authority-http-api": {
+      "discovery": {
+        "method": "docker",
+        "servers": [{
+          "name": "coreos-host",
+          "host": "172.17.0.1",
+          "port": 2375
+        }],
+        "image_name": "quay.io/democracyworks/election-authority-http-api",
+        "container_port": 8080,
+        "check_interval": 5
+      },
+      "haproxy": {
+        "port": 8084,
+        "server_options": "check inter 2 rise 3 fall 2",
+        "listen": [
+          "mode http"
+        ]
+      }
+    },
+    "election-mail-http-api": {
+      "discovery": {
+        "method": "docker",
+        "servers": [{
+          "name": "coreos-host",
+          "host": "172.17.0.1",
+          "port": 2375
+        }],
+        "image_name": "quay.io/democracyworks/election-mail-http-api",
+        "container_port": 8080,
+        "check_interval": 5
+      },
+      "haproxy": {
+        "port": 8085,
+        "server_options": "check inter 2 rise 3 fall 2",
+        "listen": [
+          "mode http"
+        ]
+      }
     }
   },
   "haproxy": {
@@ -178,11 +218,11 @@
       ],
       "backend election_authority_api": [
         "mode http",
-        "reqrep ^([^\\ ]*)\\ /election-authorities(.+)  \\1\\ /election-authority-http-api\\2",
+        "reqrep ^([^\\ ]*)\\ /election-authorities(.+)  \\1\\ \\2",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
-        "server local localhost:8081 maxconn 32"
+        "server local localhost:8084 maxconn 32"
       ],
       "backend voting_method_api": [
         "mode http",
@@ -234,11 +274,11 @@
       ],
       "backend election_mail_api": [
         "mode http",
-        "reqrep ^([^\\ ]*)\\ /election-mail(.+)    \\1\\ /election-mail-http-api\\2",
+        "reqrep ^([^\\ ]*)\\ /election-mail(.+)    \\1\\ \\2",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
-        "server local localhost:8081 maxconn 32"
+        "server local localhost:8085 maxconn 32"
       ],
       "backend turbovote_admin_api": [
         "mode http",
