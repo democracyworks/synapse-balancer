@@ -4,7 +4,7 @@
       "discovery": {
         "method": "docker",
         "servers": [{
-          "name": "coreos-1",
+          "name": "coreos-host",
           "host": "172.17.0.1",
           "port": 2375
         }],
@@ -15,6 +15,46 @@
       "haproxy": {
         "port": 8081,
         "server_options": "check inter 2s rise 3 fall 2",
+        "listen": [
+          "mode http"
+        ]
+      }
+    },
+    "address-works": {
+      "discovery": {
+        "method": "docker",
+        "servers": [{
+          "name": "coreos-host",
+          "host": "172.17.0.1",
+          "port": 2375
+        }],
+        "image_name": "quay.io/democracyworks/address-works",
+        "container_port": 8080,
+        "check_interval": 5
+      },
+      "haproxy": {
+        "port": 8082,
+        "server_options": "check inter 2 rise 3 fall 2",
+        "listen": [
+          "mode http"
+        ]
+      }
+    },
+    "election-http-api": {
+      "discovery": {
+        "method": "docker",
+        "servers": [{
+          "name": "coreos-host",
+          "host": "172.17.0.1",
+          "port": 2375
+        }],
+        "image_name": "quay.io/democracyworks/election-http-api",
+        "container_port": 8080,
+        "check_interval": 5
+      },
+      "haproxy": {
+        "port": 8083,
+        "server_options": "check inter 2 rise 3 fall 2",
         "listen": [
           "mode http"
         ]
@@ -106,11 +146,11 @@
       ],
       "backend address": [
         "mode http",
-        "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ /address-works\\2",
+        "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ \\2",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
-        "server local localhost:8081 maxconn 32"
+        "server local localhost:8082 maxconn 32"
       ],
       "backend user_api": [
         "mode http",
@@ -186,11 +226,11 @@
       ],
       "backend election_api": [
         "mode http",
-        "reqrep ^([^\\ ]*)\\ /elections(.+)    \\1\\ /election-http-api\\2",
+        "reqrep ^([^\\ ]*)\\ /elections(.+)    \\1\\ \\2",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
-        "server local localhost:8081 maxconn 32"
+        "server local localhost:8083 maxconn 32"
       ],
       "backend election_mail_api": [
         "mode http",

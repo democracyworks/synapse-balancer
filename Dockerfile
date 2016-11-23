@@ -22,7 +22,5 @@ ADD conf.json conf.json
 
 EXPOSE 80
 EXPOSE 8080
-EXPOSE 8081
-EXPOSE 8082
 
 CMD ["/usr/src/synapse-balancer/start-synapse.sh"]
