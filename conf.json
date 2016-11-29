@@ -119,6 +119,26 @@
           "mode http"
         ]
       }
+    },
+    "partner-http-api": {
+      "discovery": {
+        "method": "docker",
+        "servers": [{
+          "name": "coreos-host",
+          "host": "172.17.0.1",
+          "port": 2375
+        }],
+        "image_name": "quay.io/democracyworks/partner-http-api",
+        "container_port": 8080,
+        "check_interval": 5
+      },
+      "haproxy": {
+        "port": 8087,
+        "server_options": "check inter 2 rise 3 fall 2",
+        "listen": [
+          "mode http"
+        ]
+      }
     }
   },
   "haproxy": {
@@ -262,11 +282,11 @@
       ],
       "backend partners_api": [
         "mode http",
-        "reqrep ^([^\\ ]*)\\ /partners(.+)  \\1\\ /partner-http-api\\2",
+        "reqrep ^([^\\ ]*)\\ /partners(.+)  \\1\\ \\2",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
-        "server local localhost:8081 maxconn 32"
+        "server local localhost:8087 maxconn 32"
       ],
       "backend sendgrid_monitor": [
         "mode http",
