@@ -139,6 +139,26 @@
           "mode http"
         ]
       }
+    },
+    "turbovote-admin-http-api": {
+      "discovery": {
+        "method": "docker",
+        "servers": [{
+          "name": "coreos-host",
+          "host": "172.17.0.1",
+          "port": 2375
+        }],
+        "image_name": "quay.io/democracyworks/turbovote-admin-http-api",
+        "container_port": 8080,
+        "check_interval": 5
+      },
+      "haproxy": {
+        "port": 8088,
+        "server_options": "check inter 2 rise 3 fall 2",
+        "listen": [
+          "mode http"
+        ]
+      }
     }
   },
   "haproxy": {
@@ -322,12 +342,12 @@
       ],
       "backend turbovote_admin_api": [
         "mode http",
-        "reqrep ^([^\\ ]*)\\ /turbovote-admin(.+)    \\1\\ /turbovote-admin-http-api\\2",
+        "reqrep ^([^\\ ]*)\\ /turbovote-admin(.+)    \\1\\ \\2",
         "timeout  server  10m",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
-        "server local localhost:8081 maxconn 32"
+        "server local localhost:8088 maxconn 32"
       ]
     }
   }
