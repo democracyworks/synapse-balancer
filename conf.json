@@ -338,7 +338,7 @@
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
-        "server local localhost:8081 maxconn 32"
+        "server local localhost:8092 maxconn 32"
       ],
       "backend election_notification_api": [
         "mode http",
