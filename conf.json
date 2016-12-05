@@ -219,6 +219,26 @@
           "mode http"
         ]
       }
+    },
+    "user-http-api": {
+      "discovery": {
+        "method": "docker",
+        "servers": [{
+          "name": "coreos-host",
+          "host": "172.17.0.1",
+          "port": 2375
+        }],
+        "image_name": "quay.io/democracyworks/user-http-api",
+        "container_port": 8080,
+        "check_interval": 5
+      },
+      "haproxy": {
+        "port": 8092,
+        "server_options": "check inter 2 rise 3 fall 2",
+        "listen": [
+          "mode http"
+        ]
+      }
     }
   },
   "haproxy": {
@@ -314,7 +334,7 @@
       ],
       "backend user_api": [
         "mode http",
-        "reqrep ^([^\\ ]*)\\ /users(.+)    \\1\\ /user-http-api\\2",
+        "reqrep ^([^\\ ]*)\\ /users(.+)    \\1\\ \\2",
         "balance roundrobin",
         "option httpclose",
         "option forwardfor",
