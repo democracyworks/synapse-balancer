@@ -13,14 +13,16 @@ RUN bundle config build.nokogiri --use-system-libraries
 RUN mkdir -p /usr/src/synapse-balancer
 WORKDIR /usr/src/synapse-balancer
 
-ADD Gemfile Gemfile
-ADD Gemfile.lock Gemfile.lock
+COPY Gemfile Gemfile
+COPY Gemfile.lock Gemfile.lock
 RUN bundle install --system
 
-ADD start-synapse.sh start-synapse.sh
-ADD conf.json conf.json
+COPY start-synapse.sh start-synapse.sh
+COPY conf conf
 
 EXPOSE 80
 EXPOSE 8080
 
-CMD ["/usr/src/synapse-balancer/start-synapse.sh"]
+ENTRYPOINT ["/usr/src/synapse-balancer/start-synapse.sh"]
+
+CMD ["conf.json"]

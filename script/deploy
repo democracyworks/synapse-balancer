@@ -24,6 +24,7 @@ IMAGE_TAG=$(echo $DOCKER_IMAGE | awk -F: '{print $2}')
 
 echo '--- updating fleet service template'
 perl -p -i -e "s/^Environment=VERSION=.+$/Environment=VERSION=${IMAGE_TAG}/" synapse-balancer@.service
+perl -p -i -e "s/^Environment=DEPLOY_ENV=.*$/Environment=DEPLOY_ENV=${DEPLOY_ENV}/" synapse-balancer@.service
 
 fleetctl destroy synapse-balancer@.service || true # may not exist
 fleetctl submit synapse-balancer@.service
