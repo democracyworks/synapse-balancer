@@ -25,4 +25,4 @@ EXPOSE 8080
 
 ENTRYPOINT ["/usr/src/synapse-balancer/start-synapse.sh"]
 
-CMD ["conf.json"]
+CMD ["config.json"]
