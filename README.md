@@ -12,5 +12,20 @@
 
 ## Usage
 
+1. Put your config file in `conf/config.json`
 1. `docker build -t quay.io/democracyworks/synapse-balancer .`
 1. `docker run -d -p 60800:80 quay.io/democracyworks/synapse-balancer`
+
+### Multiple configs
+
+If you want to support more than one config in different environments, you
+have a couple of different options:
+
+1. Bake in multiple config files and choose one at runtime:
+    1. Put your configs (named anything you want) in the `conf` dir.
+    1. Build a new Docker image to pick up your configs.
+    1. Append the name of your config file to the end of the docker run command
+       (WITHOUT the `conf/` prefix).
+1. Mount your config(s) as a volume:
+    1. In your docker run command, add a `--volume /path/to/your/configs:/usr/src/synapse-balancer/conf` and then append
+    the filename of the config file you want to run to your docker run command.

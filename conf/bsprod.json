@@ -1,0 +1,112 @@
+{
+  "services": {
+    "address-works": {
+      "discovery": {
+        "method": "docker",
+        "servers": [{
+          "name": "coreos-host",
+          "host": "172.17.0.1",
+          "port": 2375
+        }],
+        "image_name": "quay.io/democracyworks/address-works",
+        "container_port": 8080,
+        "check_interval": 5
+      },
+      "haproxy": {
+        "port": 8082,
+        "server_options": "check inter 2 rise 3 fall 2",
+        "listen": [
+          "mode http"
+        ]
+      }
+    },
+    "ballot-scout": {
+      "discovery": {
+        "method": "docker",
+        "servers": [{
+          "name": "coreos-host",
+          "host": "172.17.0.1",
+          "port": 2375
+        }],
+        "image_name": "quay.io/democracyworks/ballot-scout",
+        "container_port": 8080,
+        "check_interval": 5
+      },
+      "haproxy": {
+        "port": 8080,
+        "server_options": "check inter 2 rise 3 fall 2",
+        "listen": [
+          "mode http"
+        ]
+      }
+    }
+  },
+  "haproxy": {
+    "reload_command": "haproxy -f /etc/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)",
+    "config_file_path": "/etc/haproxy/haproxy.cfg",
+    "socket_file_path": "/var/haproxy/stats.sock",
+    "do_writes": true,
+    "do_reloads": true,
+    "do_socket": false,
+    "global": [
+      "daemon",
+      "user haproxy",
+      "group haproxy",
+      "maxconn 4096",
+      "ulimit-n 8207",
+      "log     127.0.0.1 local0",
+      "log     127.0.0.1 local1 notice",
+      "stats   socket /var/haproxy/stats.sock mode 666 level admin"
+    ],
+    "defaults": [
+      "log      global",
+      "option   dontlognull",
+      "maxconn  2000",
+      "retries  3",
+      "timeout  connect 5s",
+      "timeout  client  1m",
+      "timeout  server  10m",
+      "option   redispatch",
+      "balance  roundrobin"
+    ],
+    "extra_sections": {
+      "listen stats": [
+        "mode http",
+        "bind *:8080",
+        "log global",
+        "maxconn 10",
+        "stats enable",
+        "stats refresh 30s",
+        "stats show-node",
+        "stats uri /stats"
+      ],
+      "frontend http-in": [
+        "mode http",
+        "bind *:80",
+        "http-response add-header X-Via %[env(HOSTNAME)]",
+        "capture request header Host len 64",
+        "acl is_ballot_scout hdr_end(host) -i api.ballotscout.org",
+        "use_backend ballot_scout if is_ballot_scout",
+        "acl is_address hdr_end(host) -i api-int.ballotscout.org",
+        "use_backend address if is_address"
+      ],
+      "backend ballot_scout": [
+        "mode http",
+        "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ \\2",
+        "timeout server 10m",
+        "balance roundrobin",
+        "option httpclose",
+        "option forwardfor",
+        "server local localhost:8080 maxconn 32"
+      ],
+      "backend address": [
+        "mode http",
+        "reqrep ^([^\\ ]*)\\ (.+)    \\1\\ \\2",
+        "balance roundrobin",
+        "option httpclose",
+        "option forwardfor",
+        "server local localhost:8082 maxconn 32"
+      ]
+    }
+  }
+}
