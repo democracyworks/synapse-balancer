@@ -12,7 +12,7 @@ TimeoutStartSec=10m
 TimeoutStopSec=10m
 
 Environment=DOCKER_REPO=quay.io/democracyworks/synapse-balancer
-Environment=VERSION=newprod
+Environment=VERSION=latest
 Environment=CONTAINER=synapse-balancer
 Environment=HOME=/root
 
