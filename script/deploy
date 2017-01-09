@@ -41,4 +41,5 @@ for i in $(seq 1 ${NODE_COUNT}); do
   fleetctl destroy synapse-balancer@$i || true # may not exist
   fleetctl start synapse-balancer@$i
   # TODO: Use consul to see if synapse-balancer@$i is healthy yet before moving on
+  sleep 30
 done
