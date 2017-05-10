@@ -291,7 +291,8 @@
         "acl is_turbovote_admin_api url_beg -i /turbovote-admin",
         "use_backend turbovote_admin_api if is_tv_api is_turbovote_admin_api",
         "acl is_dw_api hdr_end(host) api.democracy.works",
-        "use_backend election_api if is_dw_api is_election_api"
+        "use_backend election_api if is_dw_api is_election_api",
+        "default_backend election_api"
       ],
       "backend address": [
         "mode http",
